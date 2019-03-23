@@ -1,0 +1,30 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model User
+
+        <table style="font-family:Arial;border:1px solid black; width:800px">
+            <thead>
+                <tr>
+                    <th>Profile Image</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Delete</th>
+                    <th>History</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a asp-controller="User" asp-action="History" asp-route-id="@Model.Id"><h3>@Model.FirstName.Substring(0, 1)@Model.LastName.Substring(0, 1)</h3></a></td>
+                    <td>@Model.FirstName</td>
+                    <td>@Model.LastName</td>
+                    <td>@Model.Email</td>
+                    <td><a asp-controller="User" asp-action="History" asp-route-id="@Model.Id">History</a></td>
+                    <td id="removeIcon"><a asp-controller="User" asp-action="DeleteUser" asp-route-id="@Model.Id">Remove</a></td>
+                </tr>
+            </tbody>
+        </table>
+

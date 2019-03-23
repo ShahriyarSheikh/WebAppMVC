@@ -1,0 +1,23 @@
+﻿@model List<User>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Dashboard</h2>
+@using (Html.BeginForm())
+{
+    <input type="text" name="SearchUser" />
+    <input type="submit" />
+}
+<button> <a asp-controller="User" asp-action="AddUser">Create User</a></button>
+<div>
+
+    @foreach (var user in Model)
+    {
+        @Html.Partial("_Users", user);
+    }
+
+
+</div>
+
