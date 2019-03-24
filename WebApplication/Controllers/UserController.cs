@@ -97,7 +97,14 @@ namespace WebApplication.Controllers
             });
         }
 
-        public async Task<IActionResult> SearchMovie(int id,string movieName) {
+        public ActionResult MovieSearch() {
+            var a = TempData["FirstName"];
+            var b = TempData["Id"];
+            return View();
+        }
+
+        public async Task<IActionResult> SearchMovieBy(string movieName) {
+            var id = Convert.ToInt32(TempData["Id"]);
             var result = await _searchService.GetMovieByMovieName(id,movieName);
             var movieResponse = new Movie
             {
@@ -106,7 +113,7 @@ namespace WebApplication.Controllers
                 Name = result.Name
             };
 
-            return View(movieResponse);
+            return View("MovieSearch",movieResponse);
 
         }
 

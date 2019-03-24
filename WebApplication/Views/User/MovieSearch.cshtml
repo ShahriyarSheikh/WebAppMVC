@@ -1,0 +1,35 @@
+﻿
+@model Movie
+@{
+    ViewData["Title"] = "MovieSearch";
+}
+
+<h2>Movie Search</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-xs-12" style="margin:inherit">
+            @using (Html.BeginForm("SearchMovieBy", "User", FormMethod.Get))
+            {
+                <input type="text" name="movieName" />
+                <input type="submit" value="SearchMovieBy" />
+            }
+        </div>
+    </div>
+    @if(Model != null) { 
+    <div class="row">
+        <div class="col-12">
+            <p>Movie Name</p>
+            <p>@Model.Name</p>
+        </div>
+        <div class="col-12">
+            <p>Release Date</p>
+            <p>@Model.ReleasedDate</p>
+        </div>
+        <div class="col-12">
+            <p>Genre</p>
+            <p>@Model.Genre</p>
+        </div>
+    </div>
+    }
+</div>
