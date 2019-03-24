@@ -19,6 +19,7 @@ namespace WebApplication.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.status = true;
             return View();
         }
 
@@ -35,7 +36,8 @@ namespace WebApplication.Controllers
                 //Redirect here
                return Redirect("~/Home/Index");
 
-            return View("Error");
+            ViewBag.Status = doesUserExist;
+            return View("Index");
         }
 
     }

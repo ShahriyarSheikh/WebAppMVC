@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebApplication.Models;
 using WebAppServices.Services;
-using X.PagedList;
 
 namespace WebApplication.Controllers
 {
@@ -13,25 +11,34 @@ namespace WebApplication.Controllers
     {
         private readonly IUserService _userService;
         private readonly ISearchHistory _searchService;
+        private readonly PagedResult pagedResult;
+        public static int pageNumber = 0;
+        public static bool isInitialized = false;
 
         public UserController(IUserService userService, ISearchHistory searchHistory)
         {
             _userService = userService;
             _searchService = searchHistory;
+
         }
-        public IActionResult Index(int? page)
+        public IActionResult Index()
         {
-            var listOfUsers = _userService.GetUsers(0, 0, 15);
+            var listOfUsers = _userService.GetUsers(1, 1);
             var modelToReturn = new List<User>();
-            foreach (var user in listOfUsers) {
-                modelToReturn.Add(new User {
+            foreach (var user in listOfUsers)
+            {
+                modelToReturn.Add(new User
+                {
                     Id = user.Id,
                     Email = user.Email,
                     FirstName = user.FirstName,
                     LastName = user.LastName
                 });
             }
-            return View(modelToReturn);
+            var pagedProperty = new PagedResult(_userService);
+            
+            ViewBag.PageNumber = pageNumber;
+            return View(pagedProperty);
         }
 
         [HttpGet]
@@ -45,10 +52,14 @@ namespace WebApplication.Controllers
             return View(user);
         }
 
+        public IActionResult CreateUser() {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddUser(User user) {
-            var result = _userService.CreateUser(new WebApp.CoreModels.Models.UserModel {
+        public async Task<IActionResult> AddUser(User user) {
+            var result = await _userService.CreateUser(new WebApp.CoreModels.Models.UserModel {
                 Email = user.Email,
                 FirstName = user.FirstName,
                 Id = user.Id,
@@ -56,15 +67,15 @@ namespace WebApplication.Controllers
             });
 
             if (result) {
-                return Redirect("/Index");
+                return Redirect("Index");
             }
 
-            return  View("~/Shared/Error");
+            return Redirect("~/Shared/Error");
         }
 
      
-        public IActionResult DeleteUser(string id) {
-            var result = _userService.DeleteUser(Convert.ToInt32(id));
+        public async Task<IActionResult> DeleteUser(string id) {
+            var result = await _userService.DeleteUser(Convert.ToInt32(id));
 
             if (result)
                 return Redirect("/User");
@@ -72,9 +83,18 @@ namespace WebApplication.Controllers
             return View("~/Shared/Error");
         }
 
-        public PartialViewResult SearchUser(string id) {
+        [HttpGet]
+        public IActionResult SearchUser(string id) {
             var result = _userService.SearchUser(Convert.ToInt32(id));
-            return PartialView("_UserSearchResult",result);
+            if (result == null)
+                return View("SearchedUser", null);
+
+            return View("SearchedUser",new User {
+                LastName = result.LastName,
+                Id = result.Id,
+                FirstName = result.FirstName,
+                Email = result.Email
+            });
         }
 
         public async Task<IActionResult> SearchMovie(int id,string movieName) {

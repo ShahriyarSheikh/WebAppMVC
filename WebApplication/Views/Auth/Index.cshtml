@@ -4,37 +4,42 @@
     ViewData["Title"] = "Login";
 }
 
-<h2>View</h2>
+<h2>Login</h2>
 
-<h4>Account</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Login" asp-controller="Auth">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+<div class="container">
+    <div class="row center-block">
+        <div class="col-md-offset-4 col-md-4"><img src="~/images/banner1.svg" class="img-rounded"/></div>
     </div>
-</div>
-
-<h4>
-    @{ 
-        var status = ViewData["status"];
-        <p>status</p>
-    }
-</h4>
+    <div class="row" style="padding:2rem">
+            <div class="col-md-4 col-lg-offset-4 mt-4">
+                <form asp-action="Login" asp-controller="Auth">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="UserName" class="control-label"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="text-align:center">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                    @{ 
+                        if (ViewBag.status == false)
+                        {
+                                        <div class="alert alert-warning" role="alert">
+                                           Wrong Credentials, Please try again
+                                        </div>
+                        }
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
 
 <div>
     <a asp-action="Index">Back to List</a>

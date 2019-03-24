@@ -1,0 +1,27 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "SearchedUser";
+}
+
+<h2>Searched User</h2>
+
+<div class="container">
+
+    @if (Model == null)
+    {
+        <p>No Records found</p>
+    }
+    else
+    {
+        @Html.Partial("_Users", Model);
+    }
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+

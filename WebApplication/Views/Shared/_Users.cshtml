@@ -3,25 +3,35 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
+    <style>
+    #main {
+        width: 204px;
+        height: 204px;
+    }
+
+    .mysquare {
+        border-radius: 2rem;
+        text-align: center;
+        text-align: center;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        border-style: solid;
+    }
+
+    </style>
+
 @model User
 
-        <table style="font-family:Arial;border:1px solid black; width:800px">
-            <thead>
-                <tr>
-                    <th>Profile Image</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Delete</th>
-                    <th>History</th>
-                </tr>
-            </thead>
+        <table style=" font-family: Arial;
+        border: 1px solid black;
+        width: 800px;
+        margin-bottom: 2rem">
+            
             <tbody>
                 <tr>
-                    <td><a asp-controller="User" asp-action="History" asp-route-id="@Model.Id"><h3>@Model.FirstName.Substring(0, 1)@Model.LastName.Substring(0, 1)</h3></a></td>
-                    <td>@Model.FirstName</td>
-                    <td>@Model.LastName</td>
-                    <td>@Model.Email</td>
+                    <td ><a asp-controller="User" asp-action="History" asp-route-id="@Model.Id"><h3 class="mysquare">@Model.FirstName.Substring(0, 1).ToUpperInvariant()@Model.LastName.Substring(0, 1).ToUpper()</h3></a></td>
+                            <td>@Model.FirstName @Model.LastName</td>
+                            <td>@Model.Email</td>
                     <td><a asp-controller="User" asp-action="History" asp-route-id="@Model.Id">History</a></td>
                     <td id="removeIcon"><a asp-controller="User" asp-action="DeleteUser" asp-route-id="@Model.Id">Remove</a></td>
                 </tr>
