@@ -1,23 +1,48 @@
-﻿@model List<User>
+﻿@model PagedResult
 
 @{
     ViewData["Title"] = "Index";
 }
+    <div class="container">
+        <div class="row" style="margin-top:2rem">
+            <div class="col-md-4 col-xs-12">
+                <h3>Users</h3>
+            </div>
+            <div class="col-md-4 col-xs-12" style="margin:inherit">
+                @using (Html.BeginForm("SearchUser", "User", FormMethod.Get))
+                {
+                    <input type="text" name="id" />
+                    <input type="submit" value="SearchUser"/>
+                }
+            </div>
+            <div class="col-md-4 col-xs-12" style="margin:inherit">
+                <a asp-controller="User" asp-action="CreateUser" class="btn btn-primary active" >Add User</a>
+            </div>
+        </div>
 
-<h2>Dashboard</h2>
-@using (Html.BeginForm())
-{
-    <input type="text" name="SearchUser" />
-    <input type="submit" />
-}
-<button> <a asp-controller="User" asp-action="AddUser">Create User</a></button>
-<div>
+        <div>
 
-    @foreach (var user in Model)
-    {
-        @Html.Partial("_Users", user);
-    }
+            @foreach (var user in Model.Element)
+            {
+                @Html.Partial("_Users", user);
+            }
 
+            <ul class="pagination">
+                @if (Model.HasPrevious)
+                {
+                    <li class="page-item">
+                        <a asp-page="/pagination" asp-route-currentpage="@(Model.CurrentPage -1)" class="page-link">Previous</a>
+                    </li>
+                }
+                @if (Model.HasNext)
+                {
+                    <li class="page-item">
+                        <a asp-page="/pagination" asp-route-currentpage="@(Model.CurrentPage + 1)" class="page-link">Next</a>
+                    </li>
+                }
+            </ul>
 
-</div>
+        </div>
+
+    </div>
 

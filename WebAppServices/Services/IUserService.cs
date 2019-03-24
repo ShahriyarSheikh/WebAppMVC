@@ -1,16 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebApp.CoreModels.Models;
 
 namespace WebAppServices.Services
 {
     public interface IUserService
     {
-        List<UserModel> GetUsers(int page, int skip, int limit);
+        List<UserModel> GetUsers(int currentPage, int pageSize = 0);
 
-        bool DeleteUser(int id);
+        Task<bool> DeleteUser(int id);
 
-        bool CreateUser(UserModel user);
+        Task<bool> CreateUser(UserModel user);
 
         UserModel SearchUser(int Id);
+
+        Task<int> GetCount();
     }
 }
