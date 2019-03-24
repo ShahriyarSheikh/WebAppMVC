@@ -5,3 +5,6 @@ Question 2: Front end is not complete, pagination missing, view missing, bugs on
 Api were not working, so created all the consumption in HttpUtility and worked with mock data
 
 Question 3: Front end is not complete, service level is complete with api consumed successfully. entity framework has issues with .net core 2.1
+
+
+EDIT: Please refer to commit e76d092 as it was submitted at 11:pm. The later commits consist of bug fixes of the application
